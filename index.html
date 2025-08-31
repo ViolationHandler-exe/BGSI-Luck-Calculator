@@ -11,6 +11,7 @@
       color: white;
       margin: 0;
       padding: 0;
+      padding-bottom: 100px;
     }
     header {
       text-align: center;
@@ -166,7 +167,7 @@
         { name: "Ruby Golem", odds: 5 },
         { name: "Dragon", odds: 8.33 },
         { name: "Dark Dragon", odds: 15.38 },
-        { name: "Emerald Golem (Legendary)", odds: 200 }
+        { name: "Emerald Golem", odds: 200, legendary: true }
       ]
     },
     {
@@ -177,7 +178,7 @@
         { name: "Magma Fox", odds: 6.66 },
         { name: "Magma Bear", odds: 14.28 },
         { name: "Demon", odds: 45.45 },
-        { name: "Inferno Dragon (Legendary)", odds: 400 }
+        { name: "Inferno Dragon", odds: 400, legendary: true }
       ]
     },
     {
@@ -187,8 +188,8 @@
         { name: "Dark Bat", odds: 3.34 },
         { name: "Angel", odds: 14.28 },
         { name: "Emerald Bat", odds: 45.45 },
-        { name: "Unicorn (Legendary)", odds: 400 },
-        { name: "Flying Pig (Legendary)", odds: 1000 }
+        { name: "Unicorn", odds: 400, legendary: true },
+        { name: "Flying Pig", odds: 1000, legendary: true }
       ]
     },
     {
@@ -198,8 +199,8 @@
         { name: "Space Bull", odds: 3.34 },
         { name: "Lunar Fox", odds: 14.28 },
         { name: "Lunarcorn", odds: 45.45 },
-        { name: "Lunar Serpent (Legendary)", odds: 400 },
-        { name: "Electra (Legendary)", odds: 1000 }
+        { name: "Lunar Serpent", odds: 400, legendary: true },
+        { name: "Electra", odds: 1000, legendary: true }
       ]
     },
     {
@@ -209,8 +210,8 @@
         { name: "Void Dragon", odds: 29.9 },
         { name: "Void Kitty", odds: 7 },
         { name: "Void Lord", odds: 2.2 },
-        { name: "Void Elemental (Legendary)", odds: 400 },
-        { name: "Void Leviathan (Legendary)", odds: 1000 }
+        { name: "Void Elemental", odds: 400, legendary: true },
+        { name: "Void Leviathan", odds: 1000, legendary: true }
       ]
     },
     {
@@ -220,8 +221,8 @@
         { name: "Hell Kitty", odds: 3.34 },
         { name: "Hell Fox", odds: 14.28 },
         { name: "Hellhound", odds: 45.45 },
-        { name: "Cerberus (Legendary)", odds: 400 },
-        { name: "Infernal Dragon (Legendary)", odds: 1000 }
+        { name: "Cerberus", odds: 400, legendary: true },
+        { name: "Infernal Dragon", odds: 1000, legendary: true }
       ]
     },
     {
@@ -231,8 +232,8 @@
         { name: "Nightmare Bull", odds: 3.34 },
         { name: "Nightmare Wolf", odds: 14.28 },
         { name: "Nightmare Serpent", odds: 45.45 },
-        { name: "Demonic Dominus (Legendary)", odds: 400 },
-        { name: "Nightmare Spirit (Legendary)", odds: 1000 }
+        { name: "Demonic Dominus", odds: 400, legendary: true },
+        { name: "Nightmare Spirit", odds: 1000, legendary: true }
       ]
     },
     {
@@ -242,8 +243,8 @@
         { name: "Rainbow Kitty", odds: 3.34 },
         { name: "Rainbow Deer", odds: 14.28 },
         { name: "Rainbow Fox", odds: 45.45 },
-        { name: "Rainbow Serpent (Legendary)", odds: 400 },
-        { name: "Rainbow Master (Legendary)", odds: 1000 }
+        { name: "Rainbow Serpent", odds: 400, legendary: true },
+        { name: "Rainbow Master", odds: 1000, legendary: true }
       ]
     }
     ],
@@ -281,14 +282,6 @@
         ]
       },
       {
-        name: "Inferno Egg",
-        pets: [
-          { name: "Inferno Dragon", odds: 86 },
-          { name: "Shiny Inferno Dragon", odds: 10 },
-          { name: "Mythic Inferno Dragon", odds: 4 }
-        ]
-      },
-      {
         name: "Spikey Egg",
         pets: [
           { name: "Golem", odds: 3.33 },
@@ -296,7 +289,7 @@
           { name: "Ruby Golem", odds: 5 },
           { name: "Dragon", odds: 8.33 },
           { name: "Dark Dragon", odds: 15.38 },
-          { name: "Emerald Golem (Legendary)", odds: 200 }
+          { name: "Emerald Golem", odds: 200, legendary: true }
         ]
       },
       {
@@ -307,7 +300,7 @@
           { name: "Magma Fox", odds: 6.66 },
           { name: "Magma Bear", odds: 14.28 },
           { name: "Demon", odds: 45.45 },
-          { name: "Inferno Dragon (Legendary)", odds: 400 }
+          { name: "Inferno Dragon", odds: 400, legendary: true }
         ]
       },
       {
@@ -317,8 +310,8 @@
           { name: "Dark Bat", odds: 3.34 },
           { name: "Angel", odds: 14.28 },
           { name: "Emerald Bat", odds: 45.45 },
-          { name: "Unicorn (Legendary)", odds: 400 },
-          { name: "Flying Pig (Legendary)", odds: 1000 }
+          { name: "Unicorn", odds: 400, legendary: true },
+          { name: "Flying Pig", odds: 1000, legendary: true }
         ]
       },
       {
@@ -328,8 +321,8 @@
           { name: "Space Bull", odds: 3.34 },
           { name: "Lunar Fox", odds: 14.28 },
           { name: "Lunarcorn", odds: 45.45 },
-          { name: "Lunar Serpent (Legendary)", odds: 400 },
-          { name: "Electra (Legendary)", odds: 1000 }
+          { name: "Lunar Serpent", odds: 400, legendary: true },
+          { name: "Electra", odds: 1000, legendary: true }
         ]
       },
       {
@@ -339,8 +332,8 @@
           { name: "Void Dragon", odds: 29.9 },
           { name: "Void Kitty", odds: 7 },
           { name: "Void Lord", odds: 2.2 },
-          { name: "Void Elemental (Legendary)", odds: 400 },
-          { name: "Void Leviathan (Legendary)", odds: 1000 }
+          { name: "Void Elemental", odds: 400, legendary: true },
+          { name: "Void Leviathan", odds: 1000, legendary: true }
         ]
       },
       {
@@ -350,8 +343,8 @@
           { name: "Hell Kitty", odds: 3.34 },
           { name: "Hell Fox", odds: 14.28 },
           { name: "Hellhound", odds: 45.45 },
-          { name: "Cerberus (Legendary)", odds: 400 },
-          { name: "Infernal Dragon (Legendary)", odds: 1000 }
+          { name: "Cerberus", odds: 400, legendary: true },
+          { name: "Infernal Dragon", odds: 1000, legendary: true }
         ]
       },
       {
@@ -361,8 +354,8 @@
           { name: "Nightmare Bull", odds: 3.34 },
           { name: "Nightmare Wolf", odds: 14.28 },
           { name: "Nightmare Serpent", odds: 45.45 },
-          { name: "Demonic Dominus (Legendary)", odds: 400 },
-          { name: "Nightmare Spirit (Legendary)", odds: 1000 }
+          { name: "Demonic Dominus", odds: 400, legendary: true },
+          { name: "Nightmare Spirit", odds: 1000, legendary: true }
         ]
       },
       {
@@ -372,8 +365,8 @@
           { name: "Rainbow Kitty", odds: 3.34 },
           { name: "Rainbow Deer", odds: 14.28 },
           { name: "Rainbow Fox", odds: 45.45 },
-          { name: "Rainbow Serpent (Legendary)", odds: 400 },
-          { name: "Rainbow Master (Legendary)", odds: 1000 }
+          { name: "Rainbow Serpent", odds: 400, legendary: true },
+          { name: "Rainbow Master", odds: 1000, legendary: true }
         ]
       }
     ],
@@ -385,9 +378,9 @@
           { name: "Snow Fox", odds: 1.56 },
           { name: "Penguin", odds: 3.33 },
           { name: "Ice Bear", odds: 33.33 },
-          { name: "Marshmallow", odds: 2000 },
-          { name: "Minty Serpent", odds: 66666.67 },
-          { name: "Ice Winged Hydra", odds: 833333.33 },
+          { name: "Marshmallow", odds: 2000, legendary: true },
+          { name: "Minty Serpent", odds: 66666.67, legendary: true },
+          { name: "Ice Winged Hydra", odds: 833333.33, legendary: true },
           { name: "Giant Pearl (Secret)", odds: 125000000, secret: true }
         ]
       },
@@ -397,9 +390,9 @@
           { name: "Vine Kitty", odds: 1.56 },
           { name: "Vine Dinosaur", odds: 3.33 },
           { name: "Vine Deer", odds: 33.33 },
-          { name: "Thorn Dragon", odds: 4000 },
-          { name: "Flower Pot", odds: 100000 },
-          { name: "Lovely Lotus", odds: 1000000 },
+          { name: "Thorn Dragon", odds: 4000, legendary: true },
+          { name: "Flower Pot", odds: 100000, legendary: true },
+          { name: "Lovely Lotus", odds: 1000000, legendary: true },
           { name: "Fire Champion (Secret)", odds: 500000000, secret: true },
           { name: "Dark Champion (Secret)", odds: 500000000, secret: true },
           { name: "Earth Champion (Secret)", odds: 500000000, secret: true },
@@ -412,9 +405,9 @@
           { name: "Lava Golem", odds: 1.56 },
           { name: "Lava Bat", odds: 3.33 },
           { name: "Lava Imp", odds: 33.33 },
-          { name: "Magma Cube", odds: 4000 },
-          { name: "Night Dweller", odds: 100000 },
-          { name: "Fire King", odds: 1333333 },
+          { name: "Magma Cube", odds: 4000, legendary: true },
+          { name: "Night Dweller", odds: 100000, legendary: true },
+          { name: "Fire King", odds: 1333333, legendary: true },
           { name: "Hellshard (Secret)", odds: 1000000000, secret: true }
         ]
       },
@@ -431,9 +424,9 @@
           { name: "Shark", odds: 1.56 },
           { name: "Crab", odds: 3.33 },
           { name: "Octopus", odds: 33.33 },
-          { name: "Angler Fish", odds: 4000 },
-          { name: "Jellyfish", odds: 200000 },
-          { name: "Atlantis Guardian", odds: 2000000 },
+          { name: "Angler Fish", odds: 4000, legendary: true },
+          { name: "Jellyfish", odds: 200000, legendary: true },
+          { name: "Atlantis Guardian", odds: 2000000, legendary: true },
           { name: "Tidal God (Secret)", odds: 250000000, secret: true },
           { name: "Koi (GONE) (Secret)", odds: 1000000000, secret: true },
           { name: "Abyssal Dragon (Secret)", odds: 2000000000, secret: true },
@@ -445,9 +438,9 @@
           { name: "Sleepy Fox", odds: 1.56 },
           { name: "Stellar Goat", odds: 3.33 },
           { name: "Cosmit Antlers", odds: 33.33 },
-          { name: "Dreamscape Influence", odds: 4000 },
-          { name: "Serene Axolotl", odds: 200000 },
-          { name: "Cosmic Herald", odds: 2000000 },
+          { name: "Dreamscape Influence", odds: 4000, legendary: true },
+          { name: "Serene Axolotl", odds: 200000, legendary: true },
+          { name: "Cosmic Herald", odds: 2000000, legendary: true },
           { name: "Eternity (Secret)", odds: 125000000, secret: true },
           { name: "Bloomshifter (Secret)", odds: 500000000, secret: true },
           { name: "Parasol Paladin (Secret)", odds: 1000000000, secret: true },
@@ -461,10 +454,10 @@
       pets: [
         { name: "Split", odds: 64 },
         { name: "Dragon Split", odds: 30 },
-        { name: "Celestial Split", odds: 2850 },
-        { name: "Demonarium", odds: 50000 },
-        { name: "Contrast", odds: 1000000 },
-        { name: "ACE", odds: 2000000 },
+        { name: "Celestial Split", odds: 2850, legendary: true },
+        { name: "Demonarium", odds: 50000, legendary: true },
+        { name: "Contrast", odds: 1000000, legendary: true },
+        { name: "ACE", odds: 2000000, legendary: true },
         { name: "Demonlord (Secret)", odds: 33333333, secret: true },
         { name: "Eternal Cucumber (Secret)", odds: 100000000, secret: true },
         { name: "Hellfire (Secret)", odds: 133333333, secret: true },
@@ -480,9 +473,9 @@
           { name: "Sleepy Fox", odds: 1.56 },
           { name: "Stellar Goat", odds: 3.33 },
           { name: "Cosmit Antlers", odds: 33.33 },
-          { name: "Dreamscape Influence", odds: 4000 },
-          { name: "Serene Axolotl", odds: 200000 },
-          { name: "Cosmic Herald", odds: 2000000 },
+          { name: "Dreamscape Influence", odds: 4000, legendary: true },
+          { name: "Serene Axolotl", odds: 200000, legendary: true },
+          { name: "Cosmic Herald", odds: 2000000, legendary: true },
           { name: "Eternity (Secret)", odds: 125000000, secret: true },
           { name: "Bloomshifter (Secret)", odds: 500000000, secret: true },
           { name: "Parasol Paladin (Secret)", odds: 1000000000, secret: true },
@@ -558,11 +551,19 @@
           // const adj = (odds / bonus) * shinyLuck * mythicLuck;
           let adj = odds / bonus;
           if(pet.secret) adj /= secretLuck;
-          const perc = (1/adj*100);
-
-          rows[i].querySelector(".adj-b").innerText = "1 in "+odds.toLocaleString();
-          rows[i].querySelector(".adj-x").innerText = adj<999?"1 in "+adj.toFixed(1):"1 in "+Math.round(adj).toLocaleString();
-          rows[i].querySelector(".adj-p").innerText = perc.toFixed(6)+"%";
+          var perc = (1/adj*100);
+          if(tabType.includes("mythic") && !pet.legendary && !pet.secret)
+          {
+            rows[i].querySelector(".adj-b").innerText = "1 in " + odds.toLocaleString();;
+            rows[i].querySelector(".adj-x").innerText = "1 in N/A";
+            rows[i].querySelector(".adj-p").innerText = "1 in N/A";
+          }
+          else
+          {
+            rows[i].querySelector(".adj-b").innerText = "1 in " + odds.toLocaleString();
+            rows[i].querySelector(".adj-x").innerText = adj < 999 ? "1 in " + adj.toFixed(1) : "1 in " + Math.round(adj).toLocaleString();
+            rows[i].querySelector(".adj-p").innerText = perc.toFixed(6) + "%";
+          }
         });
       }
 
