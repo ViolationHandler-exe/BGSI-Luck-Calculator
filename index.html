@@ -5,103 +5,166 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BGSI Hatch Chance Calculator (Expanded)</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #2a003f;
-      color: white;
-      margin: 0;
-      padding: 0;
-      padding-bottom: 100px;
-    }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #2a003f;
+    color: white;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 100px;
+  }
+  header {
+    text-align: center;
+    padding: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ff00ff;
+    text-shadow: 0px 0px 15px #ff00ff;
+  }
+  .world-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 8px 10px;
+    background-color: #2a003f;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5); /* subtle shadow for separation */
+  }
+  .world-buttons button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+    font-weight: bold;
+    flex: 1 1 auto;
+    min-width: 120px;
+    transition: background-color 0.2s ease;
+  }
+  .world-buttons button.active {
+    background-color: #ff00ff;
+    color: white;
+  }
+  .calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 20px;
+    padding-left: 8vw;
+    padding-right: 8vw;
+  }
+  .egg-card {
+    background-color: #4b006e;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+  }
+  .egg-title {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+  .options {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  .options button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+  }
+  .options button.active {
+    background-color: #ff00ff;
+    color: white;
+  }
+  .inputs {
+    margin-bottom: 10px;
+  }
+  .inputs label {
+    display: block;
+    margin-top: 5px;
+  }
+  #inputShrink{
+    width: calc(0.15 * 500px);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  table, th, td {
+    border: 1px solid #666;
+  }
+  th, td {
+    text-align: center;
+    padding: 5px;
+  }
+  th {
+    background-color: #660099;
+  }
+
+  /* Mobile-specific improvements */
+  @media (max-width: 600px) {
     header {
-      text-align: center;
-      padding: 20px;
-      font-size: 2rem;
-      font-weight: bold;
-      color: #ff00ff;
-      text-shadow: 0px 0px 15px #ff00ff;
+      font-size: 1.5rem;
+      padding: 15px;
     }
     .world-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* two buttons per row */
+      gap: 8px;
+      padding: 10px;
     }
     .world-buttons button {
-      padding: 10px 15px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      background-color: #333;
-      color: white;
-      font-weight: bold;
-    }
-    .world-buttons button.active {
-      background-color: #ff00ff;
-      color: white;
+      min-width: unset; /* let grid control width */
+      padding: 12px;
+      font-size: 0.95rem;
     }
     .calculator-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-      gap: 20px;
-      padding-left: 8vw;
-      padding-right: 8vw;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      padding: 0 10px;
     }
     .egg-card {
-      background-color: #4b006e;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+      overflow-x: auto;
     }
     .egg-title {
-      text-align: center;
-      font-size: 1.3rem;
-      margin-bottom: 10px;
+      font-size: 1rem;
     }
     .options {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 15px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .options button {
-      padding: 5px 10px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      background-color: #333;
-      color: white;
-    }
-    .options button.active {
-      background-color: #ff00ff;
-      color: white;
-    }
-    .inputs {
-      margin-bottom: 10px;
+      min-width: 90px;
+      flex: 1 1 auto;
     }
     .inputs label {
-      display: block;
-      margin-top: 5px;
+      font-size: 0.8rem;
     }
-    #inputShrink{
-      width: calc(0.15 * 500px);
+    #inputShrink {
+      width: 60px;
+      font-size: 0.8rem;
+      padding: 4px;
     }
     table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    table, th, td {
-      border: 1px solid #666;
+      font-size: 0.85rem;
+      min-width: 400px; /* keeps table readable on scroll */
     }
     th, td {
-      text-align: center;
-      padding: 5px;
+      padding: 6px;
     }
-    th {
-      background-color: #660099;
-    }
-  </style>
+  }
+</style>
+
 </head>
 <body>
 <header>BGSI Hatch Chance Calculator</header>
@@ -149,14 +212,6 @@
         { name: "Piggy", odds: 7.14 },
         { name: "Ice Deer", odds: 12.5 },
         { name: "Ice Dragon", odds: 33.33 }
-      ]
-    },
-    {
-      name: "Inferno Egg",
-      pets: [
-        { name: "Inferno Dragon", odds: 86 },
-        { name: "Shiny Inferno Dragon", odds: 10 },
-        { name: "Mythic Inferno Dragon", odds: 4 }
       ]
     },
     {
