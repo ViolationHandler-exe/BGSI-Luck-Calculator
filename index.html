@@ -196,7 +196,6 @@
 <div class="calculator-grid" id="egg-container"></div>
 
 <script>
-  // Permanent Worlds + Shadow Egg
   const eggData = {
   Overworld: [
     // ---------- WORLD 1 (Overworld) ----------
@@ -323,127 +322,60 @@
     MinigameParadise: [
       // ---------- WORLD 2 (Minigame Paradise) ----------
       {
-        name: "Common Egg",
+        name: "Showman Egg",
         pets: [
-          { name: "Doggy", odds: 2.5 },
-          { name: "Kitty", odds: 3.33 },
-          { name: "Bunny", odds: 4 },
-          { name: "Bear", odds: 20 },
-          { name: "King Doggy (Secret)", odds: 100000000, secret: true }
+          { name: "Game Doggy", odds: 1.82 },
+          { name: "Gamer Boi", odds: 2.5 },
+          { name: "Queen of Hearts", odds: 20 }
         ]
       },
       {
-        name: "Spotted Egg",
+        name: "Mining Egg",
         pets: [
-          { name: "Mouse", odds: 2.5 },
-          { name: "Wolf", odds: 4 },
-          { name: "Fox", odds: 5 },
-          { name: "Polar Bear", odds: 10 },
-          { name: "Panda", odds: 20 }
+          { name: "Mining Doggy", odds: 1.67 },
+          { name: "Mining Bat", odds: 3.33 },
+          { name: "Cave Mole", odds: 14.29 },
+          { name: "Ore Golem", odds: 33.33 },
+          { name: "Crystal Unicorn", odds: 200, legendary: true },
+          { name: "Stone Gargoyle", odds: 20000, legendary: true }
         ]
       },
       {
-        name: "Iceshard Egg",
+        name: "Cyber Egg",
         pets: [
-          { name: "Ice Kitty", odds: 3.33 },
-          { name: "Deer", odds: 4 },
-          { name: "Ice Wolf", odds: 5 },
-          { name: "Piggy", odds: 7.14 },
-          { name: "Ice Deer", odds: 12.5 },
-          { name: "Ice Dragon", odds: 33.33 }
+          { name: "Robo Kitty", odds: 3.33 },
+          { name: "Martian Kitty", odds: 4 },
+          { name: "Cyber Wolf", odds: 5 },
+          { name: "Cyborg Phoenix", odds: 2500, legendary: true },
+          { name: "Space Invader", odds: 50000, legendary: true },
+          { name: "Bionic Shard", odds: 6666666.66, legendary: true },
+          { name: "Mech Robot", odds: 666666666.66, secret: true }
         ]
       },
       {
-        name: "Spikey Egg",
+        name: "Neon Egg",
         pets: [
-          { name: "Golem", odds: 3.33 },
-          { name: "Dinosaur", odds: 3.33 },
-          { name: "Ruby Golem", odds: 5 },
-          { name: "Dragon", odds: 8.33 },
-          { name: "Dark Dragon", odds: 15.38 },
-          { name: "Emerald Golem", odds: 200, legendary: true }
+          { name: "Neon Doggy", odds: 1.68 },
+          { name: "Hologram Dragon", odds: 3.92 },
+          { name: "Disco Ball", odds: 8.33 },
+          { name: "Neon Wyvern", odds: 3333.33, legendary: true },
+          { name: "Neon Wire Eye", odds: 66666.66, legendary: true },
+          { name: "Equalizer", odds: 833333.33, legendary: true },
+          { name: "Hyperwave Kitty", odds: 125000000, secret: true }
         ]
       },
       {
-        name: "Magma Egg",
+        name: "Chance Egg",
         pets: [
-          { name: "Magma Doggy", odds: 2.22 },
-          { name: "Magma Deer", odds: 3.28 },
-          { name: "Magma Fox", odds: 6.66 },
-          { name: "Magma Bear", odds: 14.28 },
-          { name: "Demon", odds: 45.45 },
-          { name: "Inferno Dragon", odds: 400, legendary: true }
-        ]
-      },
-      {
-        name: "Crystal Egg",
-        pets: [
-          { name: "Cave Bat", odds: 1.66 },
-          { name: "Dark Bat", odds: 3.34 },
-          { name: "Angel", odds: 14.28 },
-          { name: "Emerald Bat", odds: 45.45 },
-          { name: "Unicorn", odds: 400, legendary: true },
-          { name: "Flying Pig", odds: 1000, legendary: true }
-        ]
-      },
-      {
-        name: "Lunar Egg",
-        pets: [
-          { name: "Space Mouse", odds: 1.66 },
-          { name: "Space Bull", odds: 3.34 },
-          { name: "Lunar Fox", odds: 14.28 },
-          { name: "Lunarcorn", odds: 45.45 },
-          { name: "Lunar Serpent", odds: 400, legendary: true },
-          { name: "Electra", odds: 1000, legendary: true }
-        ]
-      },
-      {
-        name: "Void Egg",
-        pets: [
-          { name: "Void Bat", odds: 60 },
-          { name: "Void Dragon", odds: 29.9 },
-          { name: "Void Kitty", odds: 7 },
-          { name: "Void Lord", odds: 2.2 },
-          { name: "Void Elemental", odds: 400, legendary: true },
-          { name: "Void Leviathan", odds: 1000, legendary: true }
-        ]
-      },
-      {
-        name: "Hell Egg",
-        pets: [
-          { name: "Hell Bat", odds: 1.66 },
-          { name: "Hell Kitty", odds: 3.34 },
-          { name: "Hell Fox", odds: 14.28 },
-          { name: "Hellhound", odds: 45.45 },
-          { name: "Cerberus", odds: 400, legendary: true },
-          { name: "Infernal Dragon", odds: 1000, legendary: true }
-        ]
-      },
-      {
-        name: "Nightmare Egg",
-        pets: [
-          { name: "Nightmare Mouse", odds: 1.66 },
-          { name: "Nightmare Bull", odds: 3.34 },
-          { name: "Nightmare Wolf", odds: 14.28 },
-          { name: "Nightmare Serpent", odds: 45.45 },
-          { name: "Demonic Dominus", odds: 400, legendary: true },
-          { name: "Nightmare Spirit", odds: 1000, legendary: true }
-        ]
-      },
-      {
-        name: "Rainbow Egg",
-        pets: [
-          { name: "Rainbow Doggy", odds: 1.66 },
-          { name: "Rainbow Kitty", odds: 3.34 },
-          { name: "Rainbow Deer", odds: 14.28 },
-          { name: "Rainbow Fox", odds: 45.45 },
-          { name: "Rainbow Serpent", odds: 400, legendary: true },
-          { name: "Rainbow Master", odds: 1000, legendary: true }
+          { name: "Galaxy Dice", odds: 1.67 },
+          { name: "Chance Dragon", odds: 2.5 },
+          { name: "Ring Master", odds: 100000, legendary: true },
+          { name: "Royal Guardian", odds: 200000000, secret: true }
         ]
       }
     ],
     SevenSeas: [
-      // ---------- WORLD 1 (Overworld) ----------
+      // ---------- WORLD 3 (Seven Seas) ----------
       {
         name: "Icy Egg",
         pets: [
