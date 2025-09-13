@@ -128,6 +128,32 @@
   th {
     background-color: #660099;
   }
+  
+  .global-options {
+    text-align: center;
+    margin: 15px 0;
+  }
+  
+  .luck-event-label {
+	font-size: 0.9rem;
+	font-weight: bold;
+	color: #ffccff;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	background: #4b006e;
+	padding: 8px 14px;
+	border-radius: 8px;
+	box-shadow: 0 0 8px rgba(255,0,255,0.4);
+  }
+  
+  .luck-event-label input[type="checkbox"] {
+	transform: scale(1.3);
+	accent-color: #ff00ff;
+	cursor: pointer;
+  }
+  
 
   /* Mobile-specific improvements */
   @media (max-width: 600px) {
@@ -192,6 +218,7 @@
   <button class="world-btn" data-world="SevenSeas">Seven Seas</button>
   <button class="world-btn" data-world="Limited">Limited</button>
 </div>
+
 
 <div class="calculator-grid" id="egg-container"></div>
 
@@ -524,12 +551,21 @@
           <button class="tab-btn" data-type="mythic">Mythic</button>
           <button class="tab-btn" data-type="shiny-mythic">Shiny Mythic</button>
         </div>
+		
+		<div class="global-options">
+			<div class="tab-btn">
+				<label class="luck-event-label">
+				  <input type="checkbox" id="luckEventCheckbox" class="luck-event"> Luck Event </label>
+			</div>
+		</div>
+		
         <div class="inputs">
           <label>Luck Bonus (%): <input type="number" class="luck-input" value="100" min="0" id="inputShrink"></label>
           <label>Secret Luck Multi: <input type="number" class="secret-input" value="1" min="0" id="inputShrink"></label>
           <label>Shiny Luck Multi: <input type="number" class="shiny-input" value="40" min="0" id="inputShrink"></label>
           <label>Mythic Luck Multi: <input type="number" class="mythic-input" value="100" min="0" id="inputShrink"></label>
         </div>
+
         <table>
           <thead>
             <tr><th>Pet</th><th>Base Odds</th><th>Adjusted (1 in X)</th><th>Adjusted (%)</th></tr>
@@ -551,18 +587,25 @@
       const secretInput = card.querySelector(".secret-input");
       const shinyInput = card.querySelector(".shiny-input");
       const mythicInput = card.querySelector(".mythic-input");
+      const luckEvent = card.querySelector(".luck-event");
       const tabBtns = card.querySelectorAll(".tab-btn");
 
       shinyInput.parentElement.style.display = "none";
       mythicInput.parentElement.style.display = "none";
+	  
 
       function recalc(tabType="base") {
         var luck = parseFloat(luckInput.value)||100;
-        if(luck > 200) luck -= 200;
+		const isLuckEvent = luckEvent.checked;
+        
+		if(luck > 200) luck -= 200;
+		if(isLuckEvent && luck > 200) luck -= 200;
+		
         var secretLuck = parseFloat(secretInput.value)||1;
         // if(secretLuck > 0) secretLuck -= 1;
         const shinyLuck = parseFloat(shinyInput.value)||40;
         const mythicLuck = parseFloat(mythicInput.value)||100;
+        
         const rows = card.querySelectorAll("tbody tr");
 
         egg.pets.forEach((pet,i)=>{
@@ -612,6 +655,8 @@
       updateInputVisibility("base");
     });
   }
+  
+  
 
   // Initial render
   renderEggs("Overworld");
