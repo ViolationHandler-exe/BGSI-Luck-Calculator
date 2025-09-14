@@ -376,7 +376,7 @@
           { name: "Cyborg Phoenix", odds: 2500, legendary: true },
           { name: "Space Invader", odds: 50000, legendary: true },
           { name: "Bionic Shard", odds: 6666666.66, legendary: true },
-          { name: "Mech Robot", odds: 666666666.66, secret: true }
+          { name: "Mech Robot", odds: 66666666.66, secret: true }
         ]
       },
       {
@@ -552,7 +552,46 @@
 	  
       const card = document.createElement("div");
       card.className = "egg-card";
-      card.innerHTML = `
+      // card.innerHTML = `
+      //   <div class="egg-title">${egg.name}</div>
+      //   <div class="options">
+      //     <button class="tab-btn active" data-type="base">Base</button>
+      //     <button class="tab-btn" data-type="shiny">Shiny</button>
+      //     <button class="tab-btn" data-type="mythic">Mythic</button>
+      //     <button class="tab-btn" data-type="shiny-mythic">Shiny Mythic</button>
+      //   </div>
+		 //
+		 //<div class="global-options">
+		 //	<div class="tab-btn">
+		 //		<label class="luck-event-label">
+		 //		  <input type="checkbox" id="luckEventCheckbox" class="luck-event"> Luck Event </label>
+		 //	</div>
+		 //</div>
+		 //
+      //   <div class="inputs">
+      //     <label>Luck Bonus (%): <input type="number" class="luck-input" value="100" min="0" id="inputShrink"></label>
+      //     <label>Secret Luck Multi: <input type="number" class="secret-input" value="1" min="0" id="inputShrink"></label>
+      //     <label>Shiny Luck Multi: <input type="number" class="shiny-input" value="40" min="0" id="inputShrink"></label>
+      //     <label>Mythic Luck Multi: <input type="number" class="mythic-input" value="100" min="0" id="inputShrink"></label>
+      //   </div>
+	  // 
+      //   <table>
+      //     <thead>
+      //       <tr><th>Pet</th><th>Base Odds</th><th>Adjusted (1 in X)</th><th>Adjusted (%)</th></tr>
+      //     </thead>
+      //     <tbody>
+      //       ${egg.pets.map(p=>`
+      //         <tr>
+      //           <td class="adj-n">${p.name}</td>
+      //           <td class="adj-b">1 in ${p.odds}</td>
+      //           <td class="adj-x">1 in ${p.odds}</td>
+      //           <td class="adj-p">${(1/p.odds*100).toFixed(6)}%</td>
+      //         </tr>`).join("")}
+      //     </tbody>
+      //   </table>
+      // `;
+	  
+	  card.innerHTML = `
         <div class="egg-title">${egg.name}</div>
         <div class="options">
           <button class="tab-btn active" data-type="base">Base</button>
@@ -560,13 +599,6 @@
           <button class="tab-btn" data-type="mythic">Mythic</button>
           <button class="tab-btn" data-type="shiny-mythic">Shiny Mythic</button>
         </div>
-		
-		<div class="global-options">
-			<div class="tab-btn">
-				<label class="luck-event-label">
-				  <input type="checkbox" id="luckEventCheckbox" class="luck-event"> Luck Event </label>
-			</div>
-		</div>
 		
         <div class="inputs">
           <label>Luck Bonus (%): <input type="number" class="luck-input" value="100" min="0" id="inputShrink"></label>
@@ -590,6 +622,7 @@
           </tbody>
         </table>
       `;
+	  
       container.appendChild(card);
 
       const luckInput = card.querySelector(".luck-input");
@@ -605,10 +638,10 @@
 
       function recalc(tabType="base") {
         var luck = parseFloat(luckInput.value)||100;
-		const isLuckEvent = luckEvent.checked;
+		// const isLuckEvent = luckEvent.checked;
         
 		if(luck > 200) luck -= 200;
-		if(isLuckEvent && luck > 200) luck -= 200;
+		// if(isLuckEvent && luck > 200) luck -= 200;
 		
         var secretLuck = parseFloat(secretInput.value)||1;
         // if(secretLuck > 0) secretLuck -= 1;
