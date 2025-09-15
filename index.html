@@ -642,7 +642,7 @@
 		// const isLuckEvent = luckEvent.checked;
         
 		if(luck > 200) luck -= 200;
-		if(world == "Overworld") luck += 300;
+		if(world == "Overworld" || world == "SevenSeas" ) luck += 300;
 		// if(isLuckEvent && luck > 200) luck -= 200;
 		
         var secretLuck = parseFloat(secretInput.value)||1;
