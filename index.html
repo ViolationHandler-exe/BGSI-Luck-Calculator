@@ -304,45 +304,46 @@
     {
       name: "Void Egg",
       pets: [
-        { name: "Void Bat", odds: 60 },
-        { name: "Void Dragon", odds: 29.9 },
-        { name: "Void Kitty", odds: 7 },
-        { name: "Void Lord", odds: 2.2 },
-        { name: "Void Elemental", odds: 400, legendary: true },
-        { name: "Void Leviathan", odds: 1000, legendary: true }
+        { name: "Void Kitty", odds: 1.54 },
+        { name: "Void Bat", odds: 3.13 },
+        { name: "Void Demon", odds: 45.45 },
+        { name: "Dark Phoenix", odds: 2000, legendary: true },
+        { name: "Neon Elemental", odds: 5000, legendary: true },
+        { name: "NULLVoid", odds: 1000000, legendary: true }
       ]
     },
     {
       name: "Hell Egg",
       pets: [
-        { name: "Hell Bat", odds: 1.66 },
-        { name: "Hell Kitty", odds: 3.34 },
-        { name: "Hell Fox", odds: 14.28 },
-        { name: "Hellhound", odds: 45.45 },
-        { name: "Cerberus", odds: 400, legendary: true },
-        { name: "Infernal Dragon", odds: 1000, legendary: true }
+        { name: "Hell Piggy", odds: 1.66 },
+        { name: "Hell Dragon", odds: 3.34 },
+        { name: "Hell Crawler", odds: 14.28 },
+        { name: "Inferno Demon", odds: 45.45 },
+        { name: "Inferno Cube", odds: 4000, legendary: true },
+        { name: "Virus", odds: 50000, legendary: true }
       ]
     },
     {
       name: "Nightmare Egg",
       pets: [
-        { name: "Nightmare Mouse", odds: 1.66 },
-        { name: "Nightmare Bull", odds: 3.34 },
-        { name: "Nightmare Wolf", odds: 14.28 },
-        { name: "Nightmare Serpent", odds: 45.45 },
-        { name: "Demonic Dominus", odds: 400, legendary: true },
-        { name: "Nightmare Spirit", odds: 1000, legendary: true }
+        { name: "Demon Doggy", odds: 1.66 },
+        { name: "Skeletal Deer", odds: 3.34 },
+        { name: "Night Crawler", odds: 14.28 },
+        { name: "Hell Bat", odds: 45.45 },
+        { name: "Green Hydra", odds: 25000, legendary: true },
+        { name: "Demonic Hydra", odds: 100000, legendary: true },
+        { name: "The Overlord", odds: 50000000, secret: true }
       ]
     },
     {
       name: "Rainbow Egg",
       pets: [
-        { name: "Rainbow Doggy", odds: 1.66 },
-        { name: "Rainbow Kitty", odds: 3.34 },
-        { name: "Rainbow Deer", odds: 14.28 },
-        { name: "Rainbow Fox", odds: 45.45 },
-        { name: "Rainbow Serpent", odds: 400, legendary: true },
-        { name: "Rainbow Master", odds: 1000, legendary: true }
+        { name: "Red Golem", odds: 1.66 },
+        { name: "Orange Deer", odds: 3.34 },
+        { name: "Yellow Fox", odds: 14.28 },
+        { name: "Green Angel", odds: 45.45 },
+        { name: "Hexarium", odds: 100000, legendary: true },
+        { name: "Rainbow Shock", odds: 200000, legendary: true }
       ]
     }
     ],
@@ -641,6 +642,7 @@
 		// const isLuckEvent = luckEvent.checked;
         
 		if(luck > 200) luck -= 200;
+		if(world == "Overworld") luck += 300;
 		// if(isLuckEvent && luck > 200) luck -= 200;
 		
         var secretLuck = parseFloat(secretInput.value)||1;
