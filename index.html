@@ -74,12 +74,25 @@
     padding-left: 8vw;
     padding-right: 8vw;
   }
+  // .egg-card {
+  //   background-color: #4b006e;
+  //   border-radius: 12px;
+  //   padding: 15px;
+  //   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+  // }
+  
   .egg-card {
-    background-color: #4b006e;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+	background-color: #4b006e;
+	border-radius: 12px;
+	padding: 15px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+	
+	// border: 1px solid #ccc;
+	margin-bottom: 10px;
+	display: flex;
+	flex-direction: column;
   }
+  
   .egg-title {
     text-align: center;
     font-size: 1.3rem;
@@ -103,13 +116,46 @@
     background-color: #ff00ff;
     color: white;
   }
+  
+  
   .inputs {
     margin-bottom: 10px;
+	margin-top: 5%;
   }
+  
   .inputs label {
     display: block;
     margin-top: 5px;
+	margin-bottom: 5px;
   }
+  
+  .inputs-container {
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: flex-start;
+	  margin-bottom: 10px;
+	}
+
+	.luck-multiplier {
+	  display: flex;
+	  flex-direction: column;
+	  margin-left: 10px;
+	  margin-top: 5%;
+	}
+
+	.luck-multiplier label {
+	  margin-bottom: 5px;
+	  font-weight: bold;
+	  font-size: 1.2em;
+	}
+	
+	.luck-multiplier-checkbox {
+		margin-top: 5px;
+		width: 18px;
+		height: 18px;
+	}
+	
+  
   #inputShrink{
     width: calc(0.15 * 500px);
   }
@@ -128,32 +174,6 @@
   th {
     background-color: #660099;
   }
-  
-  .global-options {
-    text-align: center;
-    margin: 15px 0;
-  }
-  
-  .luck-event-label {
-	font-size: 0.9rem;
-	font-weight: bold;
-	color: #ffccff;
-	cursor: pointer;
-	display: inline-flex;
-	align-items: center;
-	gap: 8px;
-	background: #4b006e;
-	padding: 8px 14px;
-	border-radius: 8px;
-	box-shadow: 0 0 8px rgba(255,0,255,0.4);
-  }
-  
-  .luck-event-label input[type="checkbox"] {
-	transform: scale(1.3);
-	accent-color: #ff00ff;
-	cursor: pointer;
-  }
-  
 
   /* Mobile-specific improvements */
   @media (max-width: 600px) {
@@ -193,6 +213,26 @@
     .inputs label {
       font-size: 0.8rem;
     }
+	
+	.luck-multiplier {
+	  display: flex;
+	  flex-direction: column;
+	  margin-left: 10px;
+	  margin-top: 5%;
+	}
+
+	.luck-multiplier label {
+	  margin-bottom: 5px;
+	  font-weight: bold;
+	  font-size: 0.95em;
+	}
+	
+	.luck-multiplier-checkbox {
+		margin-top: 5px;
+		width: 16px;
+		height: 16px;
+	}
+	
     #inputShrink {
       width: 60px;
       font-size: 0.8rem;
@@ -200,6 +240,61 @@
     }
     table {
       font-size: 0.85rem;
+      min-width: 400px; /* keeps table readable on scroll */
+    }
+    th, td {
+      padding: 6px;
+    }
+  }
+  
+  /* Big Screen-specific improvements */
+  @media (min-width: 1200px) {
+    header {
+      font-size: 2.5rem;
+      padding: 15px;
+    }
+    .world-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr; /* two buttons per row */
+      gap: 8px;
+      padding: 10px;
+    }
+    .world-buttons button {
+      min-width: 200px; /* let grid control width */
+      padding: 12px;
+      font-size: 1.7rem;
+    }
+    .calculator-grid {
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      padding: 0 10px;
+    }
+    .egg-card {
+      overflow-x: auto;
+    }
+    .egg-title {
+      font-size: 1.5rem;
+    }
+    .options {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .options button {
+      min-width: 90px;
+      flex: 1 1 auto;
+    }
+    .inputs label {
+      font-size: 1.2rem;
+    }
+	.tab-btn {
+	  font-size: 1.2rem;
+	}
+    #inputShrink {
+      width: 60px;
+      font-size: 1rem;
+      padding: 4px;
+    }
+    table {
+      font-size: 1.2rem;
       min-width: 400px; /* keeps table readable on scroll */
     }
     th, td {
@@ -223,527 +318,573 @@
 <div class="calculator-grid" id="egg-container"></div>
 
 <script>
-  var eggData = {
-  Overworld: [
-    // ---------- WORLD 1 (Overworld) ----------
-    {
-      name: "Common Egg",
-      pets: [
-        { name: "Doggy", odds: 2.5 },
-        { name: "Kitty", odds: 3.33 },
-        { name: "Bunny", odds: 4 },
-        { name: "Bear", odds: 20 },
-        { name: "King Doggy (Secret)", odds: 100000000, secret: true }
-      ]
-    },
-    {
-      name: "Spotted Egg",
-      pets: [
-        { name: "Mouse", odds: 2.5 },
-        { name: "Wolf", odds: 4 },
-        { name: "Fox", odds: 5 },
-        { name: "Polar Bear", odds: 10 },
-        { name: "Panda", odds: 20 }
-      ]
-    },
-    {
-      name: "Iceshard Egg",
-      pets: [
-        { name: "Ice Kitty", odds: 3.33 },
-        { name: "Deer", odds: 4 },
-        { name: "Ice Wolf", odds: 5 },
-        { name: "Piggy", odds: 7.14 },
-        { name: "Ice Deer", odds: 12.5 },
-        { name: "Ice Dragon", odds: 33.33 }
-      ]
-    },
-    {
-      name: "Spikey Egg",
-      pets: [
-        { name: "Golem", odds: 3.33 },
-        { name: "Dinosaur", odds: 3.33 },
-        { name: "Ruby Golem", odds: 5 },
-        { name: "Dragon", odds: 8.33 },
-        { name: "Dark Dragon", odds: 15.38 },
-        { name: "Emerald Golem", odds: 200, legendary: true }
-      ]
-    },
-    {
-      name: "Magma Egg",
-      pets: [
-        { name: "Magma Doggy", odds: 2.22 },
-        { name: "Magma Deer", odds: 3.28 },
-        { name: "Magma Fox", odds: 6.66 },
-        { name: "Magma Bear", odds: 14.28 },
-        { name: "Demon", odds: 45.45 },
-        { name: "Inferno Dragon", odds: 400, legendary: true }
-      ]
-    },
-    {
-      name: "Crystal Egg",
-      pets: [
-        { name: "Cave Bat", odds: 1.66 },
-        { name: "Dark Bat", odds: 3.34 },
-        { name: "Angel", odds: 14.28 },
-        { name: "Emerald Bat", odds: 45.45 },
-        { name: "Unicorn", odds: 400, legendary: true },
-        { name: "Flying Pig", odds: 1000, legendary: true }
-      ]
-    },
-    {
-      name: "Lunar Egg",
-      pets: [
-        { name: "Space Mouse", odds: 1.66 },
-        { name: "Space Bull", odds: 3.34 },
-        { name: "Lunar Fox", odds: 14.28 },
-        { name: "Lunarcorn", odds: 45.45 },
-        { name: "Lunar Serpent", odds: 400, legendary: true },
-        { name: "Electra", odds: 1000, legendary: true }
-      ]
-    },
-    {
-      name: "Void Egg",
-      pets: [
-        { name: "Void Kitty", odds: 1.54 },
-        { name: "Void Bat", odds: 3.13 },
-        { name: "Void Demon", odds: 45.45 },
-        { name: "Dark Phoenix", odds: 2000, legendary: true },
-        { name: "Neon Elemental", odds: 5000, legendary: true },
-        { name: "NULLVoid", odds: 1000000, legendary: true }
-      ]
-    },
-    {
-      name: "Hell Egg",
-      pets: [
-        { name: "Hell Piggy", odds: 1.66 },
-        { name: "Hell Dragon", odds: 3.34 },
-        { name: "Hell Crawler", odds: 14.28 },
-        { name: "Inferno Demon", odds: 45.45 },
-        { name: "Inferno Cube", odds: 4000, legendary: true },
-        { name: "Virus", odds: 50000, legendary: true }
-      ]
-    },
-    {
-      name: "Nightmare Egg",
-      pets: [
-        { name: "Demon Doggy", odds: 1.66 },
-        { name: "Skeletal Deer", odds: 3.34 },
-        { name: "Night Crawler", odds: 14.28 },
-        { name: "Hell Bat", odds: 45.45 },
-        { name: "Green Hydra", odds: 25000, legendary: true },
-        { name: "Demonic Hydra", odds: 100000, legendary: true },
-        { name: "The Overlord", odds: 50000000, secret: true }
-      ]
-    },
-    {
-      name: "Rainbow Egg",
-      pets: [
-        { name: "Red Golem", odds: 1.66 },
-        { name: "Orange Deer", odds: 3.34 },
-        { name: "Yellow Fox", odds: 14.28 },
-        { name: "Green Angel", odds: 45.45 },
-        { name: "Hexarium", odds: 100000, legendary: true },
-        { name: "Rainbow Shock", odds: 200000, legendary: true }
-      ]
-    }
-    ],
-    MinigameParadise: [
-      // ---------- WORLD 2 (Minigame Paradise) ----------
-      {
-        name: "Showman Egg",
-        pets: [
-          { name: "Game Doggy", odds: 1.82 },
-          { name: "Gamer Boi", odds: 2.5 },
-          { name: "Queen of Hearts", odds: 20 }
-        ]
-      },
-      {
-        name: "Mining Egg",
-        pets: [
-          { name: "Mining Doggy", odds: 1.67 },
-          { name: "Mining Bat", odds: 3.33 },
-          { name: "Cave Mole", odds: 14.29 },
-          { name: "Ore Golem", odds: 33.33 },
-          { name: "Crystal Unicorn", odds: 200, legendary: true },
-          { name: "Stone Gargoyle", odds: 20000, legendary: true }
-        ]
-      },
-      {
-        name: "Cyber Egg",
-        pets: [
-          { name: "Robo Kitty", odds: 3.33 },
-          { name: "Martian Kitty", odds: 4 },
-          { name: "Cyber Wolf", odds: 5 },
-          { name: "Cyborg Phoenix", odds: 2500, legendary: true },
-          { name: "Space Invader", odds: 50000, legendary: true },
-          { name: "Bionic Shard", odds: 6666666.66, legendary: true },
-          { name: "Mech Robot", odds: 66666666.66, secret: true }
-        ]
-      },
-      {
-        name: "Neon Egg",
-        pets: [
-          { name: "Neon Doggy", odds: 1.68 },
-          { name: "Hologram Dragon", odds: 3.92 },
-          { name: "Disco Ball", odds: 8.33 },
-          { name: "Neon Wyvern", odds: 3333.33, legendary: true },
-          { name: "Neon Wire Eye", odds: 66666.66, legendary: true },
-          { name: "Equalizer", odds: 833333.33, legendary: true },
-          { name: "Hyperwave Kitty", odds: 125000000, secret: true }
-        ]
-      },
-      {
-        name: "Chance Egg",
-        pets: [
-          { name: "Galaxy Dice", odds: 1.67 },
-          { name: "Chance Dragon", odds: 2.5 },
-          { name: "Ring Master", odds: 100000, legendary: true },
-          { name: "Royal Guardian", odds: 200000000, secret: true }
-        ]
-      }
-    ],
-    SevenSeas: [
-      // ---------- WORLD 3 (Seven Seas) ----------
-      {
-        name: "Icy Egg",
-        pets: [
-          { name: "Snow Fox", odds: 1.56 },
-          { name: "Penguin", odds: 3.33 },
-          { name: "Ice Bear", odds: 33.33 },
-          { name: "Marshmallow", odds: 2000, legendary: true },
-          { name: "Minty Serpent", odds: 66666.67, legendary: true },
-          { name: "Ice Winged Hydra", odds: 833333.33, legendary: true },
-          { name: "Giant Pearl (Secret)", odds: 125000000, secret: true }
-        ]
-      },
-      {
-        name: "Vine Egg",
-        pets: [
-          { name: "Vine Kitty", odds: 1.56 },
-          { name: "Vine Dinosaur", odds: 3.33 },
-          { name: "Vine Deer", odds: 33.33 },
-          { name: "Thorn Dragon", odds: 4000, legendary: true },
-          { name: "Flower Pot", odds: 100000, legendary: true },
-          { name: "Lovely Lotus", odds: 1000000, legendary: true },
-		  { name: "Any Secret", odds: 0.0, secret: true, any:true },
-          { name: "Fire Champion (Secret)", odds: 500000000, secret: true },
-          { name: "Dark Champion (Secret)", odds: 500000000, secret: true },
-          { name: "Earth Champion (Secret)", odds: 500000000, secret: true },
-          { name: "Sky Champion (Secret)", odds: 500000000, secret: true },
-        ]
-      },
-      {
-        name: "Lava Egg",
-        pets: [
-          { name: "Lava Golem", odds: 1.56 },
-          { name: "Lava Bat", odds: 3.33 },
-          { name: "Lava Imp", odds: 33.33 },
-          { name: "Magma Cube", odds: 4000, legendary: true },
-          { name: "Night Dweller", odds: 100000, legendary: true },
-          { name: "Fire King", odds: 1333333.33, legendary: true },
-          { name: "Hellshard (Secret)", odds: 1000000000, secret: true }
-        ]
-      },
-      {
-        name: "Spitty Egg",
-        pets: [
-          { name: "Round Spitty", odds: 1 },
-          { name: "Gigantic Spitty (Infinity)", odds: 40000000000, secret: true }
-        ]
-      },
-      {
-        name: "Atlantis Egg",
-        pets: [
-          { name: "Shark", odds: 1.56 },
-          { name: "Crab", odds: 3.33 },
-          { name: "Octopus", odds: 33.33 },
-          { name: "Angler Fish", odds: 4000, legendary: true },
-          { name: "Jellyfish", odds: 200000, legendary: true },
-          { name: "Atlantis Guardian", odds: 2000000, legendary: true },
-		  { name: "Any Secret", odds: 0.0, secret: true, any:true },
-          { name: "Tidal God (Secret)", odds: 250000000, secret: true },
-          { name: "Koi (GONE) (Secret)", odds: 1000000000, secret: true },
-          { name: "Abyssal Dragon (Secret)", odds: 2000000000, secret: true },
-        ]
-      },
-      {
-        name: "Dreamer Egg (REMOVED)",
-        pets: [
-          { name: "Sleepy Fox", odds: 1.56 },
-          { name: "Stellar Goat", odds: 3.33 },
-          { name: "Cosmic Antlers", odds: 33.33 },
-          { name: "Dreamscape Influence", odds: 4000, legendary: true },
-          { name: "Serene Axolotl", odds: 200000, legendary: true },
-          { name: "Cosmic Herald", odds: 2000000, legendary: true },
-		  { name: "Any Secret", odds: 0.0, secret: true, any:true },
-          { name: "Eternity (Secret)", odds: 125000000, secret: true },
-          { name: "Bloomshifter (Secret)", odds: 500000000, secret: true },
-          { name: "Parasol Paladin (Secret)", odds: 1000000000, secret: true },
-        ]
-      }
-    ],
-    Limited: [
-    // ---------- SHADOW EGG (Limited) ----------
-    {
-      name: "Shadow Egg",
-      pets: [
-        { name: "Split", odds: 64 },
-        { name: "Dragon Split", odds: 30 },
-        { name: "Celestial Split", odds: 2850, legendary: true },
-        { name: "Demonarium", odds: 50000, legendary: true },
-        { name: "Contrast", odds: 1000000, legendary: true },
-        { name: "ACE", odds: 2000000, legendary: true },
-        { name: "Any Secret", odds: 0.0, secret: true, any:true },
-        { name: "Demonlord (Secret)", odds: 33333333.33, secret: true },
-        { name: "Eternal Cucumber (Secret)", odds: 100000000, secret: true },
-        { name: "Hellfire (Secret)", odds: 133333333.33, secret: true },
-        { name: "Diamond Ring (Secret)", odds: 200000000, secret: true },
-        { name: "Galactic Paladin (Secret)", odds: 1000000000, secret: true },
-        { name: "Plasma Wolflord (Secret)", odds: 2000000000, secret: true },
-        { name: "Mariposa (Secret)", odds: 5000000000, secret: true },
-        { name: "Shadow Leviathan (Infinity)", odds: 20000000000, secret: true }
-      ]
-    },
-      {
-        name: "BOUNTY PETS",
-        pets: [
-          { name: "Bounty 1", odds: 33333333.33, secret: true },
-          { name: "Bounty 2", odds: 35000000, secret: true },
-          { name: "Bounty 3", odds: 50000000, secret: true },
-          { name: "Bounty 4", odds: 75000000, secret: true },
-          { name: "Bounty 5", odds: 100000000, secret: true },
-          { name: "Bounty 6", odds: 125000000, secret: true },
-          { name: "Bounty 7", odds: 150000000, secret: true },
-          { name: "Bounty 8", odds: 200000000, secret: true },
-          { name: "Bounty 9", odds: 250000000, secret: true },
-          { name: "Bounty 10", odds: 400000000, secret: true },
-          { name: "Bounty 11", odds: 500000000, secret: true },
-          { name: "Bounty 12", odds: 1000000000, secret: true },
-        ]
-      },
-      {
-        name: "Dreamer Egg (REMOVED)",
-        pets: [
-          { name: "Sleepy Fox", odds: 1.56 },
-          { name: "Stellar Goat", odds: 3.33 },
-          { name: "Cosmic Antlers", odds: 33.33 },
-          { name: "Dreamscape Influence", odds: 4000, legendary: true },
-          { name: "Serene Axolotl", odds: 200000, legendary: true },
-          { name: "Cosmic Herald", odds: 2000000, legendary: true },
-          { name: "Any Secret", odds: 0.0, secret: true, any:true },
-          { name: "Eternity (Secret)", odds: 125000000, secret: true },
-          { name: "Bloomshifter (Secret)", odds: 500000000, secret: true },
-          { name: "Parasol Paladin (Secret)", odds: 1000000000, secret: true },
-        ]
-      }
-    ]
-
-  };
-
-  // render eggs
-  const container = document.getElementById("egg-container");
-
-  function renderEggs(world) {
-    container.innerHTML = "";
-    var eggs = eggData[world];
-    eggs.forEach((egg) => {
-	
-	  var anySecret = {name: "Any Secret", odds: 10.0, secret: true};
-	  // egg.pets.insertRow(anySecret);
-	  
-      const card = document.createElement("div");
-      card.className = "egg-card";
-      // card.innerHTML = `
-      //   <div class="egg-title">${egg.name}</div>
-      //   <div class="options">
-      //     <button class="tab-btn active" data-type="base">Base</button>
-      //     <button class="tab-btn" data-type="shiny">Shiny</button>
-      //     <button class="tab-btn" data-type="mythic">Mythic</button>
-      //     <button class="tab-btn" data-type="shiny-mythic">Shiny Mythic</button>
-      //   </div>
-		 //
-		 //<div class="global-options">
-		 //	<div class="tab-btn">
-		 //		<label class="luck-event-label">
-		 //		  <input type="checkbox" id="luckEventCheckbox" class="luck-event"> Luck Event </label>
-		 //	</div>
-		 //</div>
-		 //
-      //   <div class="inputs">
-      //     <label>Luck Bonus (%): <input type="number" class="luck-input" value="100" min="0" id="inputShrink"></label>
-      //     <label>Secret Luck Multi: <input type="number" class="secret-input" value="1" min="0" id="inputShrink"></label>
-      //     <label>Shiny Luck Multi: <input type="number" class="shiny-input" value="40" min="0" id="inputShrink"></label>
-      //     <label>Mythic Luck Multi: <input type="number" class="mythic-input" value="100" min="0" id="inputShrink"></label>
-      //   </div>
-	  // 
-      //   <table>
-      //     <thead>
-      //       <tr><th>Pet</th><th>Base Odds</th><th>Adjusted (1 in X)</th><th>Adjusted (%)</th></tr>
-      //     </thead>
-      //     <tbody>
-      //       ${egg.pets.map(p=>`
-      //         <tr>
-      //           <td class="adj-n">${p.name}</td>
-      //           <td class="adj-b">1 in ${p.odds}</td>
-      //           <td class="adj-x">1 in ${p.odds}</td>
-      //           <td class="adj-p">${(1/p.odds*100).toFixed(6)}%</td>
-      //         </tr>`).join("")}
-      //     </tbody>
-      //   </table>
-      // `;
-	  
-	  card.innerHTML = `
-        <div class="egg-title">${egg.name}</div>
-        <div class="options">
-          <button class="tab-btn active" data-type="base">Base</button>
-          <button class="tab-btn" data-type="shiny">Shiny</button>
-          <button class="tab-btn" data-type="mythic">Mythic</button>
-          <button class="tab-btn" data-type="shiny-mythic">Shiny Mythic</button>
-        </div>
-		
-        <div class="inputs">
-          <label>Luck Bonus (%): <input type="number" class="luck-input" value="100" min="0" id="inputShrink"></label>
-          <label>Secret Luck Multi: <input type="number" class="secret-input" value="1" min="0" id="inputShrink"></label>
-          <label>Shiny Luck Multi: <input type="number" class="shiny-input" value="40" min="0" id="inputShrink"></label>
-          <label>Mythic Luck Multi: <input type="number" class="mythic-input" value="100" min="0" id="inputShrink"></label>
-        </div>
-
-        <table>
-          <thead>
-            <tr><th>Pet</th><th>Base Odds</th><th>Adjusted (1 in X)</th><th>Adjusted (%)</th></tr>
-          </thead>
-          <tbody>
-            ${egg.pets.map(p=>`
-              <tr>
-                <td class="adj-n">${p.name}</td>
-                <td class="adj-b">1 in ${p.odds}</td>
-                <td class="adj-x">1 in ${p.odds}</td>
-                <td class="adj-p">${(1/p.odds*100).toFixed(6)}%</td>
-              </tr>`).join("")}
-          </tbody>
-        </table>
-      `;
-	  
-      container.appendChild(card);
-
-      const luckInput = card.querySelector(".luck-input");
-      const secretInput = card.querySelector(".secret-input");
-      const shinyInput = card.querySelector(".shiny-input");
-      const mythicInput = card.querySelector(".mythic-input");
-      const luckEvent = card.querySelector(".luck-event");
-      const tabBtns = card.querySelectorAll(".tab-btn");
-
-      shinyInput.parentElement.style.display = "none";
-      mythicInput.parentElement.style.display = "none";
-	  var secretChanceTotal = 0;
-
-      function recalc(tabType="base") {
-        var luck = parseFloat(luckInput.value)||100;
-		// const isLuckEvent = luckEvent.checked;
-        
-		if(luck > 200) luck -= 200;
-		if(world == "Overworld" || world == "SevenSeas" ) luck += 300;
-		// if(isLuckEvent && luck > 200) luck -= 200;
-		
-        var secretLuck = parseFloat(secretInput.value)||1;
-        // if(secretLuck > 0) secretLuck -= 1;
-        const shinyLuck = parseFloat(shinyInput.value)||40;
-        const mythicLuck = parseFloat(mythicInput.value)||100;
-        
-        const rows = card.querySelectorAll("tbody tr");
-
-		const petCount = egg.pets.length;
-		var anySecretRow = -1;
-		
-	
-        egg.pets.forEach((pet,i)=>{
-          let odds = pet.odds;
-          let bonus = luck/100;
-          if(tabType.includes("shiny")) bonus /= shinyLuck;
-          if(tabType.includes("mythic")) bonus /= mythicLuck;
-          // const adj = (odds / bonus) * shinyLuck * mythicLuck;
-          
-		  let adj = odds / bonus;
-          if(pet.secret) adj /= secretLuck;
-          var perc = (1/adj*100);
-		  
-          if(tabType.includes("mythic") && !pet.legendary && !pet.secret)
-          {
-            rows[i].querySelector(".adj-b").innerText = "1 in " + odds.toLocaleString();;
-            rows[i].querySelector(".adj-x").innerText = "N/A";
-            rows[i].querySelector(".adj-p").innerText = "N/A";
-          }
-          else
-          {
-            rows[i].querySelector(".adj-b").innerText = "1 in " + odds.toLocaleString();
-            rows[i].querySelector(".adj-x").innerText = adj < 999 ? "1 in " + adj.toFixed(1) : "1 in " + Math.round(adj).toLocaleString();
-            rows[i].querySelector(".adj-p").innerText = perc.toFixed(6) + "%";
-          }
-		  
-		  if(pet.name == "Any Secret") anySecretRow = i;
-		  
-		  if(pet.secret && pet.name != "Any Secret") {
-			secretChanceTotal += perc
-		  }
-        });
-		
-		if(anySecretRow != -1) {
-			var luckValue = luck/100;
-			
-			if(tabType.includes("shiny")) luckValue /= shinyLuck;
-            if(tabType.includes("mythic")) luckValue /= mythicLuck;
-			
-			var anyOdds = 1/(secretChanceTotal / 100);
-			var anyOddsBase = anyOdds*luckValue*secretLuck;
-			// var anyOdds = 2;
-			var percent = secretChanceTotal;
-			
-			rows[anySecretRow].querySelector(".adj-b").innerText = "1 in " + anyOddsBase.toLocaleString();
-			rows[anySecretRow].querySelector(".adj-x").innerText = anyOdds < 999 ? "1 in " + anyOdds.toFixed(1) : "1 in " + Math.round(anyOdds).toLocaleString();
-			rows[anySecretRow].querySelector(".adj-p").innerText = percent.toFixed(6) + "%";
+	var eggData = {
+	Overworld: [
+	// ---------- WORLD 1 (Overworld) ----------
+	{
+		name: "Common Egg",
+		pets: [
+		{ name: "Doggy", odds: 2.5 },
+		{ name: "Kitty", odds: 3.33 },
+		{ name: "Bunny", odds: 4 },
+		{ name: "Bear", odds: 20 },
+		{ name: "King Doggy (Secret)", odds: 100000000, secret: true }
+		]
+	},
+	{
+		name: "Spotted Egg",
+		pets: [
+		{ name: "Mouse", odds: 2.5 },
+		{ name: "Wolf", odds: 4 },
+		{ name: "Fox", odds: 5 },
+		{ name: "Polar Bear", odds: 10 },
+		{ name: "Panda", odds: 20 }
+		]
+	},
+	{
+		name: "Iceshard Egg",
+		pets: [
+		{ name: "Ice Kitty", odds: 3.33 },
+		{ name: "Deer", odds: 4 },
+		{ name: "Ice Wolf", odds: 5 },
+		{ name: "Piggy", odds: 7.14 },
+		{ name: "Ice Deer", odds: 12.5 },
+		{ name: "Ice Dragon", odds: 33.33 }
+		]
+	},
+	{
+		name: "Spikey Egg",
+		pets: [
+		{ name: "Golem", odds: 3.33 },
+		{ name: "Dinosaur", odds: 3.33 },
+		{ name: "Ruby Golem", odds: 5 },
+		{ name: "Dragon", odds: 8.33 },
+		{ name: "Dark Dragon", odds: 15.38 },
+		{ name: "Emerald Golem", odds: 200, legendary: true }
+		]
+	},
+	{
+		name: "Magma Egg",
+		pets: [
+		{ name: "Magma Doggy", odds: 2.22 },
+		{ name: "Magma Deer", odds: 3.28 },
+		{ name: "Magma Fox", odds: 6.66 },
+		{ name: "Magma Bear", odds: 14.28 },
+		{ name: "Demon", odds: 45.45 },
+		{ name: "Inferno Dragon", odds: 400, legendary: true }
+		]
+	},
+	{
+		name: "Crystal Egg",
+		pets: [
+		{ name: "Cave Bat", odds: 1.66 },
+		{ name: "Dark Bat", odds: 3.34 },
+		{ name: "Angel", odds: 14.28 },
+		{ name: "Emerald Bat", odds: 45.45 },
+		{ name: "Unicorn", odds: 400, legendary: true },
+		{ name: "Flying Pig", odds: 1000, legendary: true }
+		]
+	},
+	{
+		name: "Lunar Egg",
+		pets: [
+		{ name: "Space Mouse", odds: 1.66 },
+		{ name: "Space Bull", odds: 3.34 },
+		{ name: "Lunar Fox", odds: 14.28 },
+		{ name: "Lunarcorn", odds: 45.45 },
+		{ name: "Lunar Serpent", odds: 400, legendary: true },
+		{ name: "Electra", odds: 1000, legendary: true }
+		]
+	},
+	{
+		name: "Void Egg",
+		pets: [
+		{ name: "Void Kitty", odds: 1.54 },
+		{ name: "Void Bat", odds: 3.13 },
+		{ name: "Void Demon", odds: 45.45 },
+		{ name: "Dark Phoenix", odds: 2000, legendary: true },
+		{ name: "Neon Elemental", odds: 5000, legendary: true },
+		{ name: "NULLVoid", odds: 1000000, legendary: true }
+		]
+	},
+	{
+		name: "Hell Egg",
+		pets: [
+		{ name: "Hell Piggy", odds: 1.66 },
+		{ name: "Hell Dragon", odds: 3.34 },
+		{ name: "Hell Crawler", odds: 14.28 },
+		{ name: "Inferno Demon", odds: 45.45 },
+		{ name: "Inferno Cube", odds: 4000, legendary: true },
+		{ name: "Virus", odds: 50000, legendary: true }
+		]
+	},
+	{
+		name: "Nightmare Egg",
+		pets: [
+		{ name: "Demon Doggy", odds: 1.66 },
+		{ name: "Skeletal Deer", odds: 3.34 },
+		{ name: "Night Crawler", odds: 14.28 },
+		{ name: "Hell Bat", odds: 45.45 },
+		{ name: "Green Hydra", odds: 25000, legendary: true },
+		{ name: "Demonic Hydra", odds: 100000, legendary: true },
+		{ name: "The Overlord", odds: 50000000, secret: true }
+		]
+	},
+	{
+		name: "Rainbow Egg",
+		pets: [
+		{ name: "Red Golem", odds: 1.66 },
+		{ name: "Orange Deer", odds: 3.34 },
+		{ name: "Yellow Fox", odds: 14.28 },
+		{ name: "Green Angel", odds: 45.45 },
+		{ name: "Hexarium", odds: 100000, legendary: true },
+		{ name: "Rainbow Shock", odds: 200000, legendary: true }
+		]
+	}
+	],
+	MinigameParadise: [
+		// ---------- WORLD 2 (Minigame Paradise) ----------
+		{
+		name: "Showman Egg",
+		pets: [
+			{ name: "Game Doggy", odds: 1.82 },
+			{ name: "Gamer Boi", odds: 2.5 },
+			{ name: "Queen of Hearts", odds: 20 }
+		]
+		},
+		{
+		name: "Mining Egg",
+		pets: [
+			{ name: "Mining Doggy", odds: 1.67 },
+			{ name: "Mining Bat", odds: 3.33 },
+			{ name: "Cave Mole", odds: 14.29 },
+			{ name: "Ore Golem", odds: 33.33 },
+			{ name: "Crystal Unicorn", odds: 200, legendary: true },
+			{ name: "Stone Gargoyle", odds: 20000, legendary: true }
+		]
+		},
+		{
+		name: "Cyber Egg",
+		pets: [
+			{ name: "Robo Kitty", odds: 3.33 },
+			{ name: "Martian Kitty", odds: 4 },
+			{ name: "Cyber Wolf", odds: 5 },
+			{ name: "Cyborg Phoenix", odds: 2500, legendary: true },
+			{ name: "Space Invader", odds: 50000, legendary: true },
+			{ name: "Bionic Shard", odds: 6666666.66, legendary: true },
+			{ name: "Mech Robot", odds: 66666666.66, secret: true }
+		]
+		},
+		{
+		name: "Neon Egg",
+		pets: [
+			{ name: "Neon Doggy", odds: 1.68 },
+			{ name: "Hologram Dragon", odds: 3.92 },
+			{ name: "Disco Ball", odds: 8.33 },
+			{ name: "Neon Wyvern", odds: 3333.33, legendary: true },
+			{ name: "Neon Wire Eye", odds: 66666.66, legendary: true },
+			{ name: "Equalizer", odds: 833333.33, legendary: true },
+			{ name: "Hyperwave Kitty", odds: 125000000, secret: true }
+		]
+		},
+		{
+		name: "Chance Egg",
+		pets: [
+			{ name: "Galaxy Dice", odds: 1.67 },
+			{ name: "Chance Dragon", odds: 2.5 },
+			{ name: "Ring Master", odds: 100000, legendary: true },
+			{ name: "Royal Guardian", odds: 200000000, secret: true }
+		]
 		}
-		secretChanceTotal = 0;
-      }
-	  
+	],
+	SevenSeas: [
+		// ---------- WORLD 3 (Seven Seas) ----------
+		{
+		name: "Icy Egg",
+		pets: [
+			{ name: "Snow Fox", odds: 1.56 },
+			{ name: "Penguin", odds: 3.33 },
+			{ name: "Ice Bear", odds: 33.33 },
+			{ name: "Marshmallow", odds: 2000, legendary: true },
+			{ name: "Minty Serpent", odds: 66666.67, legendary: true },
+			{ name: "Ice Winged Hydra", odds: 833333.33, legendary: true },
+			{ name: "Giant Pearl (Secret)", odds: 125000000, secret: true }
+		]
+		},
+		{
+		name: "Vine Egg",
+		pets: [
+			{ name: "Vine Kitty", odds: 1.56 },
+			{ name: "Vine Dinosaur", odds: 3.33 },
+			{ name: "Vine Deer", odds: 33.33 },
+			{ name: "Thorn Dragon", odds: 4000, legendary: true },
+			{ name: "Flower Pot", odds: 100000, legendary: true },
+			{ name: "Lovely Lotus", odds: 1000000, legendary: true },
+		{ name: "Any Secret", odds: 0.0, secret: true, any:true },
+			{ name: "Fire Champion (Secret)", odds: 500000000, secret: true },
+			{ name: "Dark Champion (Secret)", odds: 500000000, secret: true },
+			{ name: "Earth Champion (Secret)", odds: 500000000, secret: true },
+			{ name: "Sky Champion (Secret)", odds: 500000000, secret: true },
+		]
+		},
+		{
+		name: "Lava Egg",
+		pets: [
+			{ name: "Lava Golem", odds: 1.56 },
+			{ name: "Lava Bat", odds: 3.33 },
+			{ name: "Lava Imp", odds: 33.33 },
+			{ name: "Magma Cube", odds: 4000, legendary: true },
+			{ name: "Night Dweller", odds: 100000, legendary: true },
+			{ name: "Fire King", odds: 1333333.33, legendary: true },
+			{ name: "Hellshard (Secret)", odds: 1000000000, secret: true }
+		]
+		},
+		{
+		name: "Spitty Egg",
+		pets: [
+			{ name: "Round Spitty", odds: 1 },
+			{ name: "Gigantic Spitty (Infinity)", odds: 40000000000, secret: true }
+		]
+		},
+		{
+		name: "Atlantis Egg",
+		pets: [
+			{ name: "Shark", odds: 1.56 },
+			{ name: "Crab", odds: 3.33 },
+			{ name: "Octopus", odds: 33.33 },
+			{ name: "Angler Fish", odds: 4000, legendary: true },
+			{ name: "Jellyfish", odds: 200000, legendary: true },
+			{ name: "Atlantis Guardian", odds: 2000000, legendary: true },
+		{ name: "Any Secret", odds: 0.0, secret: true, any:true },
+			{ name: "Tidal God (Secret)", odds: 250000000, secret: true },
+			{ name: "Koi (GONE) (Secret)", odds: 1000000000, secret: true },
+			{ name: "Abyssal Dragon (Secret)", odds: 2000000000, secret: true },
+		]
+		},
+		{
+		name: "Dreamer Egg (REMOVED)",
+		pets: [
+			{ name: "Sleepy Fox", odds: 1.56 },
+			{ name: "Stellar Goat", odds: 3.33 },
+			{ name: "Cosmic Antlers", odds: 33.33 },
+			{ name: "Dreamscape Influence", odds: 4000, legendary: true },
+			{ name: "Serene Axolotl", odds: 200000, legendary: true },
+			{ name: "Cosmic Herald", odds: 2000000, legendary: true },
+		{ name: "Any Secret", odds: 0.0, secret: true, any:true },
+			{ name: "Eternity (Secret)", odds: 125000000, secret: true },
+			{ name: "Bloomshifter (Secret)", odds: 500000000, secret: true },
+			{ name: "Parasol Paladin (Secret)", odds: 1000000000, secret: true },
+		]
+		}
+	],
+	Limited: [
+	// ---------- SHADOW EGG (Limited) ----------
+	{
+		name: "Shadow Egg",
+		pets: [
+		{ name: "Split", odds: 64 },
+		{ name: "Dragon Split", odds: 30 },
+		{ name: "Celestial Split", odds: 2850, legendary: true },
+		{ name: "Demonarium", odds: 50000, legendary: true },
+		{ name: "Contrast", odds: 1000000, legendary: true },
+		{ name: "ACE", odds: 2000000, legendary: true },
+		{ name: "Any Secret", odds: 0.0, secret: true, any:true },
+		{ name: "Demonlord (Secret)", odds: 33333333.33, secret: true },
+		{ name: "Eternal Cucumber (Secret)", odds: 100000000, secret: true },
+		{ name: "Hellfire (Secret)", odds: 133333333.33, secret: true },
+		{ name: "Diamond Ring (Secret)", odds: 200000000, secret: true },
+		{ name: "Galactic Paladin (Secret)", odds: 1000000000, secret: true },
+		{ name: "Plasma Wolflord (Secret)", odds: 2000000000, secret: true },
+		{ name: "Mariposa (Secret)", odds: 5000000000, secret: true },
+		{ name: "Shadow Leviathan (Infinity)", odds: 20000000000, secret: true }
+		]
+	},
+		{
+		name: "BOUNTY PETS",
+		pets: [
+			{ name: "Bounty 1", odds: 33333333.33, secret: true },
+			{ name: "Bounty 2", odds: 35000000, secret: true },
+			{ name: "Bounty 3", odds: 50000000, secret: true },
+			{ name: "Bounty 4", odds: 75000000, secret: true },
+			{ name: "Bounty 5", odds: 100000000, secret: true },
+			{ name: "Bounty 6", odds: 125000000, secret: true },
+			{ name: "Bounty 7", odds: 150000000, secret: true },
+			{ name: "Bounty 8", odds: 200000000, secret: true },
+			{ name: "Bounty 9", odds: 250000000, secret: true },
+			{ name: "Bounty 10", odds: 400000000, secret: true },
+			{ name: "Bounty 11", odds: 500000000, secret: true },
+			{ name: "Bounty 12", odds: 1000000000, secret: true },
+		]
+		},
+		{
+		name: "Dreamer Egg (REMOVED)",
+		pets: [
+			{ name: "Sleepy Fox", odds: 1.56 },
+			{ name: "Stellar Goat", odds: 3.33 },
+			{ name: "Cosmic Antlers", odds: 33.33 },
+			{ name: "Dreamscape Influence", odds: 4000, legendary: true },
+			{ name: "Serene Axolotl", odds: 200000, legendary: true },
+			{ name: "Cosmic Herald", odds: 2000000, legendary: true },
+			{ name: "Any Secret", odds: 0.0, secret: true, any:true },
+			{ name: "Eternity (Secret)", odds: 125000000, secret: true },
+			{ name: "Bloomshifter (Secret)", odds: 500000000, secret: true },
+			{ name: "Parasol Paladin (Secret)", odds: 1000000000, secret: true },
+		]
+		}
+	]
+	
+	};
+	
+	let globalLuck   = 100;
+	let globalSecret = 1;
+	let globalShiny  = 40;
+	let globalMythic = 100;
 
-      function updateInputVisibility(tabType){
-        shinyInput.parentElement.style.display = tabType.includes("shiny")?"block":"none";
-        mythicInput.parentElement.style.display = tabType.includes("mythic")?"block":"none";
-      }
+	const container = document.getElementById("egg-container");
 
-      [luckInput,secretInput,shinyInput,mythicInput].forEach(inp=>{
-        inp.addEventListener("input",()=>recalc(card.querySelector(".tab-btn.active").dataset.type));
-      });
+	function renderEggs(world) {
+	  container.innerHTML = "";
+	  const eggs = eggData[world] || [];
 
-      tabBtns.forEach(btn=>{
-        btn.addEventListener("click",()=>{
-          tabBtns.forEach(b=>b.classList.remove("active"));
-          btn.classList.add("active");
-          const tabType = btn.dataset.type;
-          recalc(tabType);
-          updateInputVisibility(tabType);
-        });
-      });
+	  eggs.forEach((egg) => {
+		const basePets = egg.pets.slice();
+		const hasSecrets = basePets.some(p => p.secret);
+		const pets = basePets.slice();
 
-      recalc("base");
-      updateInputVisibility("base");
-    });
-  }
-  
-  
+		// optional: push "Any Secret" row if desired
+		// if (hasSecrets) pets.push({ name: "Any Secret", odds: 0, secret: true, anySecret: true });
 
-  // Initial render
-  renderEggs("Overworld");
+		const card = document.createElement("div");
+		card.className = "egg-card";
 
-  // World buttons
-  const worldBtns = document.querySelectorAll(".world-btn");
-  worldBtns.forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      worldBtns.forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
-      renderEggs(btn.dataset.world);
-    });
-  });
+		card.innerHTML = `
+			<div class="egg-title">${egg.name}</div>
+			
+			<div class="options">
+				<button class="tab-btn active" data-type="base">Base</button>
+				<button class="tab-btn" data-type="shiny">Shiny</button>
+				<button class="tab-btn" data-type="mythic">Mythic</button>
+				<button class="tab-btn" data-type="shiny-mythic">Shiny Mythic</button>
+			</div>
+			
+			
+			<div class="inputs-container">
+				<div class="inputs">
+					<label>Luck Bonus (%): 
+						<input type="number" class="luck-input value-input" value="${globalLuck}" min="0" id="inputShrink">
+					</label>
+						<label>Secret Luck Multi: 
+							<input type="text" class="secret-input value-input" value="${globalSecret}" id="inputShrink">
+					</label>
+						<label>Shiny Luck Multi: 
+							<input type="number" class="shiny-input value-input" value="${globalShiny}" min="0" id="inputShrink">
+					</label>
+						<label>Mythic Luck Multi: 
+							<input type="number" class="mythic-input value-input" value="${globalMythic}" min="0" id="inputShrink">
+					</label>
+				</div>
+				
+				<div class="luck-multiplier">
+					<label><input type="checkbox" class="luck-multiplier-checkbox" value="500">5x</label>
+					<label><input type="checkbox" class="luck-multiplier-checkbox" value="1000">10x</label>
+					<label><input type="checkbox" class="luck-multiplier-checkbox" value="2500">25x</label>
+				</div>
+			</div>
+	
+			<table>
+				<thead>
+					<tr><th>Pet</th><th>Base Odds</th><th>Adjusted (1 in X)</th><th>Adjusted (%)</th></tr>
+				</thead>
+			<tbody>
+				${pets.map(p => `
+					<tr>
+					<td class="adj-n">${p.name}</td>
+					<td class="adj-b">${p.odds ? "1 in " + p.odds : "-"}</td>
+					<td class="adj-x">-</td>
+					<td class="adj-p">-</td>
+					</tr>
+				`).join("")}
+				</tbody>
+			</table>
+		`;
+
+		container.appendChild(card);
+
+		// query inputs and controls for this card
+		const luckInput   = card.querySelector(".luck-input");
+		const secretInput = card.querySelector(".secret-input");
+		const shinyInput  = card.querySelector(".shiny-input");
+		const mythicInput = card.querySelector(".mythic-input");
+		const tabBtns     = Array.from(card.querySelectorAll(".tab-btn"));
+		const rows        = Array.from(card.querySelectorAll("tbody tr"));
+		
+		const multiplierCheckboxes = Array.from(card.querySelectorAll(".luck-multiplier-checkbox"));
+		
+		// hide shiny/mythic multiplier inputs initially
+		shinyInput.parentElement.style.display = "none";
+		mythicInput.parentElement.style.display = "none";
+
+		// ensure only one checkbox is selected at a time
+		multiplierCheckboxes.forEach(cb => {
+		  cb.addEventListener("change", () => {
+			if (cb.checked) {
+			  multiplierCheckboxes.forEach(other => {
+				if (other !== cb) other.checked = false;
+			  });
+			}
+			rerenderAll();
+		  });
+		});
+
+		// per-card recalc function
+		function recalc(tabType = "base") {
+		  let luck = parseFloat(luckInput.value) || 100;
+		  let secretLuck = parseFloat(secretInput.value) || 1;
+		  let shinyLuck = parseFloat(shinyInput.value) || 40;
+		  let mythicLuck = parseFloat(mythicInput.value) || 100;
+
+		  globalLuck = luck;
+		  globalSecret = secretLuck;
+		  globalShiny = shinyLuck;
+		  globalMythic = mythicLuck;
+		  
+		  let multiplierBonus = 0;
+		  const selectedMultiplier = multiplierCheckboxes.find(cb => cb.checked);
+		  if (selectedMultiplier) {
+		    multiplierBonus = parseFloat(selectedMultiplier.value);
+		  }
+		  luck += multiplierBonus;
+
+		  if (luck > 200) luck -= 200;
+		  if (world === "Overworld" || world === "SevenSeas") luck += 300;
+		  
+		  
+
+		  let secretChanceTotal = 0;
+		  let anySecretRow = -1;
+
+		  pets.forEach((pet, i) => {
+			const row = rows[i];
+			if (!row) return;
+			if (pet.name == "Any Secret") { anySecretRow = i; return; }
+
+			let odds = pet.odds;
+			
+			let bonus = luck / 100;
+			if (tabType.includes("shiny")) bonus /= shinyLuck;
+			if (tabType.includes("mythic")) bonus /= mythicLuck;
+
+			let adj = odds / bonus;
+			if (pet.secret) adj /= secretLuck;
+
+			const perc = (1 / adj * 100);
+
+			if (tabType.includes("mythic") && !pet.legendary && !pet.secret) {
+			  row.querySelector(".adj-b").innerText = "1 in " + odds.toLocaleString();
+			  row.querySelector(".adj-x").innerText = "N/A";
+			  row.querySelector(".adj-p").innerText = "N/A";
+			} else {
+			  row.querySelector(".adj-b").innerText = "1 in " + odds.toLocaleString();
+			  row.querySelector(".adj-x").innerText = adj < 999 ? "1 in " + adj.toFixed(1) : "1 in " + Math.round(adj).toLocaleString();
+			  row.querySelector(".adj-p").innerText = perc.toFixed(6) + "%";
+			}
+
+			if (pet.secret) secretChanceTotal += perc;
+		  });
+
+		  if (anySecretRow !== -1) {
+			const anyRow = rows[anySecretRow];
+			const luckValue = (luck / 100) / (tabType.includes("shiny") ? shinyLuck : 1) / (tabType.includes("mythic") ? mythicLuck : 1);
+			if (secretChanceTotal <= 0) {
+			  anyRow.querySelector(".adj-b").innerText = "-";
+			  anyRow.querySelector(".adj-x").innerText = "N/A";
+			  anyRow.querySelector(".adj-p").innerText = "0.000000%";
+			} else {
+			  const anyOddsRaw = 1 / (secretChanceTotal / 100);
+			  const anyOddsBase = anyOddsRaw * luckValue * secretLuck;
+			  anyRow.querySelector(".adj-b").innerText = "1 in " + Math.round(anyOddsBase).toLocaleString();
+			  anyRow.querySelector(".adj-x").innerText = anyOddsRaw < 999 ? "1 in " + anyOddsRaw.toFixed(1) : "1 in " + Math.round(anyOddsRaw).toLocaleString();
+			  anyRow.querySelector(".adj-p").innerText = secretChanceTotal.toFixed(6) + "%";
+			}
+		  }
+		}
+
+		card.recalc = recalc;
+
+		function updateInputVisibility(tabType) {
+		  shinyInput.parentElement.style.display = tabType.includes("shiny") ? "block" : "none";
+		  mythicInput.parentElement.style.display = tabType.includes("mythic") ? "block" : "none";
+		}
+
+		tabBtns.forEach(btn => {
+		  btn.addEventListener("click", () => {
+			tabBtns.forEach(b => b.classList.remove("active"));
+			btn.classList.add("active");
+			const tabType = btn.dataset.type;
+			updateInputVisibility(tabType);
+			card.recalc(tabType);
+		  });
+		});
+
+		// per-card input listeners
+		function onLocalInputChange(kind, rawVal) {
+		  let val;
+		  if (kind === "secret") {
+			val = parseFloat(rawVal);
+			if (isNaN(val)) val = 0;
+			globalSecret = val;
+		  } else {
+			val = parseInt(rawVal) || 0;
+			if (kind === "luck") globalLuck = val;
+			if (kind === "shiny") globalShiny = val;
+			if (kind === "mythic") globalMythic = val;
+		  }
+
+		  syncInputs();
+		  rerenderAll();
+		}
+
+		luckInput.addEventListener("input", e => onLocalInputChange("luck", e.target.value));
+		secretInput.addEventListener("input", e => onLocalInputChange("secret", e.target.value));
+		shinyInput.addEventListener("input", e => onLocalInputChange("shiny", e.target.value));
+		mythicInput.addEventListener("input", e => onLocalInputChange("mythic", e.target.value));
+
+		recalc("base");
+		updateInputVisibility("base");
+	  });
+	}
+
+	// sync helper
+	function syncInputs() {
+	  document.querySelectorAll(".luck-input").forEach(el => { if (document.activeElement !== el) el.value = globalLuck; });
+	  document.querySelectorAll(".secret-input").forEach(el => { if (document.activeElement !== el) el.value = globalSecret; });
+	  document.querySelectorAll(".shiny-input").forEach(el => { if (document.activeElement !== el) el.value = globalShiny; });
+	  document.querySelectorAll(".mythic-input").forEach(el => { if (document.activeElement !== el) el.value = globalMythic; });
+	}
+
+	// recalc all cards
+	function rerenderAll() {
+	  document.querySelectorAll(".egg-card").forEach(card => {
+		const activeBtn = card.querySelector(".tab-btn.active");
+		const tabType = activeBtn ? activeBtn.dataset.type : "base";
+		if (typeof card.recalc === "function") card.recalc(tabType);
+	  });
+	}
+
+	// initial render
+	renderEggs("Overworld");
+
+	// world buttons
+	const worldBtns = document.querySelectorAll(".world-btn");
+	worldBtns.forEach(btn => {
+	  btn.addEventListener("click", () => {
+		worldBtns.forEach(b => b.classList.remove("active"));
+		btn.classList.add("active");
+		renderEggs(btn.dataset.world);
+		syncInputs();
+		rerenderAll();
+	  });
+	});
 </script>
 </body>
 </html>
